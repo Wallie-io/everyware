@@ -2,10 +2,14 @@
   "name": "everyware",
   "module": "main.ts",
   "type": "module",
+  "scripts": { "dev": "bun --watch main.ts" },
   "devDependencies": {
     "bun-types": "latest"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "dexie": "^3.2.4"
   }
 }
