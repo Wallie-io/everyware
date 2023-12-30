@@ -1,29 +1,11 @@
 import Dexie from 'dexie';
-const db = new Dexie('everyware');
-
-/**
-function ImmutableChain(value) {
-  return {
-    add: function (number) {
-      return ImmutableChain(value + number);
-    },
-    multiply: function (number) {
-      return ImmutableChain(value * number);
-    },
-    getValue: function () {
-      return value;
-    },
-  };
-}
-**/
-
-function where(location: ['indexeddb']) {}
+export const db = new Dexie('everyware');
 
 export let loaded: Boolean = false;
 
 function init() {
-  db.version(1).stores({
-    posts: '++id,title,body,author',
+  db.version(2).stores({
+    posts: '++id,title,body,author,date',
   });
   db.open()
     .then(() => {
@@ -38,15 +20,5 @@ init();
 
 export default function Everyware() {
   console.log('hello world');
-  return {
-    where,
-  };
+  return {};
 }
-
-/**
-// Usage
-const result = ImmutableChain(5)
-    .add(10)
-    .multiply(2)
-    .getValue();
-**/

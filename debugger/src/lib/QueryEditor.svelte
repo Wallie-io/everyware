@@ -1,28 +1,18 @@
 <script lang="ts" context="module">
-	import Message from '$lib/Message.svelte';
-	let userInput: string = '';
-	let errorMessage: string = '';
-	let query: Object;
-
-	export function getQuery() {
-		return query;
-	}
+	let userInput: string = `{
+	body: "This is a sample body",
+	author: "jakefromdubsado"
+}
+	`;
 
 	export function submitForm() {
-		try {
-			const propRegex = /([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)(\s*:)/g;
-			userInput = userInput.replace(propRegex, '$1"$2"$3');
-			const parsed = JSON.parse(userInput);
-			if (typeof parsed === 'object') {
-				errorMessage = '';
-				query = parsed;
-
-				userInput = JSON.stringify(userInput, null, '\t');
-			} else {
-				throw new Error('JSON must be an object');
-			}
-		} catch (err: any) {
-			errorMessage = err?.message;
+		const propRegex = /([{,]\s*)([a-zA-Z_][a-zA-Z0-9_]*)(\s*:)/g;
+		userInput = userInput.replace(propRegex, '$1"$2"$3');
+		const parsed = JSON.parse(userInput);
+		if (typeof parsed === 'object') {
+			return parsed;
+		} else {
+			throw new Error('JSON must be an object');
 		}
 	}
 
@@ -75,9 +65,6 @@
 	};
 </script>
 
-{#if errorMessage}
-	<Message message={errorMessage} />
-{/if}
 <textarea bind:value={userInput} on:keydown={handleKeyDown} placeholder="Enter your query here"
 ></textarea>
 
@@ -85,13 +72,14 @@
 	textarea {
 		width: 100%;
 		min-height: 10rem;
-		font-size: 1.2rem;
+		font-size: 1.1rem;
 		padding: 1rem;
-		border: 1px solid #ccc;
 		border-radius: 5px;
 		margin-bottom: 1rem;
 		resize: none;
 		margin-top: 0.7rem;
 		font-family: 'Fira Code, monospace';
+		background: #222222;
+		color: #e6e3e3;
 	}
 </style>
